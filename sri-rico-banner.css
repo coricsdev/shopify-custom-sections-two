@@ -1,0 +1,227 @@
+/* Full-bleed background */
+.sri-rico-banner {
+  position: relative;
+  --card-bg: rgb(255 255 255 / 31%);
+  --card-border: rgba(0,0,0,0.06);
+  --heading-color: var(--color-foreground, #111);
+  --muted: #333333;
+  --btn-primary-bg: #b68a41;
+  --btn-primary-color: #fff;
+
+  background-image: var(--sri-rico-bg);
+  background-size: cover;
+  background-position: center;
+  width: 100vw; 
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-top: 52px;
+  min-height: 700px;
+}
+.sri-rico-banner::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 23%;
+  background: linear-gradient(to bottom, #fff0, #ffffff4a, #ffffffb3, #fff);
+  pointer-events: none;
+}
+.sri-rico-banner__inner {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.sri-rico-banner__card {
+  width: min(100%, 1116.59px);
+  height: 505px;
+  text-align: center;
+  background: var(--card-bg);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--card-border);
+  border-radius: 5px;
+  padding: 36px 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.sri-rico-banner__heading {
+  margin: 0 0 10px;
+  color: var(--heading-color);
+  font-family: 'Montserrat', var(--font-body-family, sans-serif) !important;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 0.02em;
+}
+
+.sri-rico-banner__subheading {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 24px;
+}
+
+.sri-rico-banner__subheading b,
+.sri-rico-banner__subheading strong {
+  color: #B87664;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.sri-rico-banner__actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: min(100%, 520px);
+  justify-items: center;
+  margin: 0 auto 12px;
+}
+
+.sri-rico-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 407px;
+  min-height: 62px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform .06s ease, box-shadow .2s ease, background-color .2s ease;
+  border: 1px solid transparent;
+}
+
+.sri-rico-banner__btn--primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-color);
+  font-weight: 600;
+  font-size: 18px;
+}
+.sri-rico-banner__btn--primary:hover,
+.sri-rico-banner__btn--primary:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.sri-rico-banner__btn--secondary {
+  background: #FEC43A;
+  color: #fff;
+  border-color: rgba(0,0,0,0.1);
+  font-weight: 600;
+  font-size: 18px;
+}
+.sri-rico-banner__btn--secondary:hover,
+.sri-rico-banner__btn--secondary:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.sri-rico-banner__btn-icon { height: 18px; width: auto; }
+
+.sri-rico-banner__fine {
+  margin: 6px 0 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+.sri-rico-banner__fine-logo { height: 28px; width: auto; }
+
+.sri-rico-banner__separator {
+  width: 55px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 20px auto;
+}
+
+.sri-rico-banner__deadline-label {
+  margin: 8px 0 8px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.sri-rico-countdown {
+  display: flex;
+  gap: 12px;
+  margin: 10px 0;
+  justify-content: center;
+}
+.sri-rico-countdown__item {
+  background: #00000096;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  width: 50px;
+  height: 66px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.sri-rico-countdown__num {
+  display: block;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.1;
+}
+.sri-rico-countdown__label {
+  display: block;
+  font-size: 10px;
+  color: #fff;
+}
+
+/*Responsive view - mobile - 767px*/
+
+@media(max-width: 767px){
+  .sri-rico-banner{
+    width: 100%;
+    margin-left:0;
+    margin-right:0;
+    min-height: 630px;
+  }
+  .sri-rico-banner__card{
+    min-height: 624px;
+  }
+  .sri-rico-banner__subheading{
+    margin-top: 31px;
+    font-size: 20px;
+  }
+  .sri-rico-banner__subheading b, .sri-rico-banner__subheading strong{
+    font-size: 20px;
+  }
+  .sri-rico-banner__inner {
+    padding: 0 0.8rem;
+  }
+  .sri-rico-banner__actions{
+    margin-top: 31px;
+  }
+  .sri-rico-banner__btn{
+    max-width: 202px;
+    font-size:16px;
+  }
+  .sri-rico-banner__fine{
+    font-size: 10px;
+    display: grid;
+  }
+  .sri-rico-banner__deadline-label{
+    font-size: 12px;
+  }
+  .sri-rico-countdown{
+    margin: 25px 0;
+  }
+  .sri-rico-banner__fine-logos {
+      margin: 0 auto;
+  }
+  .sri-rico-banner:after{
+    height: 10%;
+  }
+  .page-width-narrow{
+    --page-margin: 0;
+  }
+  
+}

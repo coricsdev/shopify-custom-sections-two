@@ -1,0 +1,176 @@
+{{ 'sri-rico-product-feature.css' | asset_url | stylesheet_tag }}
+
+<section class="sri-prod-feature" id="sri-prod-feature-{{ section.id }}">
+  <div class="sri-prod-feature__wrap page-width">
+    <!-- Left column -->
+    <div class="sri-prod-feature__col sri-prod-feature__col--left">
+      {% if section.settings.title != blank or section.settings.title_badge %}
+        <div class="sri-prod-feature__title-row">
+          {% if section.settings.title != blank %}
+            <div class="sri-prod-feature__title rte">{{ section.settings.title }}</div>
+          {% endif %}
+          {% if section.settings.title_badge %}
+            {{ section.settings.title_badge
+              | image_url: width: 80
+              | image_tag: class: 'sri-prod-feature__title-badge', loading: 'lazy', alt: section.settings.title_badge.alt | escape }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.intro != blank %}
+        <div class="sri-prod-feature__intro rte">{{ section.settings.intro }}</div>
+      {% endif %}
+
+      {% if section.settings.product_description != blank %}
+        <div class="sri-prod-feature__desc rte">
+          {{ section.settings.product_description }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="sri-prod-feature__col sri-prod-feature__col--media">
+      {% assign featured = section.settings.featured_image %}
+      {% if featured == blank %}
+        {% for b in section.blocks %}
+          {% if b.type == 'thumb' and b.settings.image %}
+            {% assign featured = b.settings.image %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% assign img_id = 'sri-prod-feature-img-' | append: section.id %}
+      {% assign alt_text = featured.alt | default: '' %}
+
+      <div class="sri-prod-feature__media">
+        {% if featured %}
+          {{ featured
+            | image_url: width: 1200
+            | image_tag: id: img_id, class: 'sri-prod-feature__img', loading: 'eager', alt: alt_text }}
+        {% else %}
+          <div class="sri-prod-feature__img--placeholder"></div>
+        {% endif %}
+
+        <!-- Prev/Next chevrons (upper-left) -->
+        <button type="button" class="sri-prod-feature__nav sri-prod-feature__nav--prev" aria-label="Previous image" data-dir="-1">‹</button>
+        <button type="button" class="sri-prod-feature__nav sri-prod-feature__nav--next" aria-label="Next image" data-dir="1">›</button>
+      </div>
+    </div>
+
+
+    <div class="sri-prod-feature__col sri-prod-feature__col--thumbs" aria-label="Product images">
+      <div class="sri-prod-feature__thumbs" role="list" data-target="#{{ img_id }}">
+        {% assign idx = 0 %}
+        {% for b in section.blocks %}
+          {% if b.type == 'thumb' and b.settings.image %}
+            <button
+              type="button"
+              class="sri-prod-feature__thumb{% if forloop.first and section.settings.featured_image == blank %} is-active{% endif %}"
+              role="listitem"
+              aria-pressed="{% if forloop.first and section.settings.featured_image == blank %}true{% else %}false{% endif %}"
+              data-index="{{ idx }}"
+              data-src="{{ b.settings.image | image_url: width: 1600 }}"
+              data-alt="{{ b.settings.image.alt | escape }}"
+            >
+              {{ b.settings.image
+                | image_url: width: 220
+                | image_tag: class: 'sri-prod-feature__thumb-img', loading: 'lazy', alt: b.settings.image.alt | escape }}
+            </button>
+            {% assign idx = idx | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="sri-prod-feature__below page-width">
+    <div class="sri-prod-feature__below-left">
+      <div class="sri-prod-feature__pricebox">
+        {% if section.settings.price_label != blank %}
+          <div class="sri-prod-feature__price-label rte">{{ section.settings.price_label }}</div>
+        {% endif %}
+        <div class="sri-prod-feature__prices">
+          {% if section.settings.compare_price != blank %}
+            <span class="sri-prod-feature__compare">{{ section.settings.compare_price | escape }}</span>
+          {% endif %}
+          {% if section.settings.sale_price != blank %}
+            <span class="sri-prod-feature__sale">{{ section.settings.sale_price | escape }}</span>
+          {% endif %}
+        </div>
+        {% if section.settings.primary_label != blank and section.settings.primary_link != blank %}
+          <a class="sri-prod-feature__btn" href="{{ section.settings.primary_link }}">{{ section.settings.primary_label | escape }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="sri-prod-feature__below-right">
+      {% if section.settings.badges_enable %}
+        <div class="sri-prod-feature__badges">
+          {% for b in section.blocks %}
+            {% if b.type == 'badge' %}
+              <div class="sri-prod-feature__badge">
+                {% if b.settings.icon %}
+                  {{ b.settings.icon
+                    | image_url: width: 36
+                    | image_tag: class: 'sri-prod-feature__badge-icon', loading: 'lazy', alt: b.settings.icon.alt | escape }}
+                {% endif %}
+                <div class="sri-prod-feature__badge-text rte">{{ b.settings.text }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.bottom_highlight != blank %}
+    <div class="sri-prod-feature__bottom-hl-out page-width">
+      <div class="sri-prod-feature__bottom-hl-text rte">
+        {{ section.settings.bottom_highlight }}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<script src="{{ 'sri-rico-product-feature.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "SRI-rico-product-feature",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "richtext", "id": "title", "label": "Title", "default": "<p><strong>SRI DRYQ</strong></p>" },
+    { "type": "image_picker", "id": "title_badge", "label": "Product Trust Badge (beside title)" },
+
+    { "type": "richtext", "id": "intro", "label": "Intro text", "default": "<p>Say <strong>goodbye to frizz</strong> with the <em>advanced</em> SRI DryQ.</p>" },
+    { "type": "richtext", "id": "product_description", "label": "Product description (rich text)", "default": "<ul><li>Intelligent heat control dries hair faster with optimal airflow speeds.</li><li>Negative ions to support frizz-free styling</li></ul>" },
+
+    { "type": "image_picker", "id": "featured_image", "label": "Featured image (main)" },
+
+    { "type": "richtext", "id": "price_label", "label": "Price label", "default": "<p>Limited Time<br>VALENTINE’S DAY sale</p>" },
+    { "type": "text", "id": "compare_price", "label": "Compare at price (strikethrough)", "default": "$299.99" },
+    { "type": "text", "id": "sale_price", "label": "Sale price", "default": "$232.99" },
+
+    { "type": "text", "id": "primary_label", "label": "CTA label", "default": "Order Now" },
+    { "type": "url", "id": "primary_link", "label": "CTA link" },
+    { "type": "richtext", "id": "bottom_highlight", "label": "Bottom Highlight Text", "default": "<p>Over <strong>100,000</strong> sold</p>" },
+
+    { "type": "checkbox", "id": "badges_enable", "label": "Show trust badges", "default": true }
+  ],
+  "blocks": [
+    { "type": "thumb", "name": "Thumbnail image", "settings": [ { "type": "image_picker", "id": "image", "label": "Image" } ] },
+    { "type": "badge", "name": "Trust badge", "settings": [ { "type": "image_picker", "id": "icon", "label": "Icon" }, { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Free Shipping</p>" } ] }
+  ],
+  "max_blocks": 30,
+  "presets": [
+    {
+      "name": "SRI-rico-product-feature",
+      "blocks": [
+        { "type": "thumb" }, { "type": "thumb" }, { "type": "thumb" }, { "type": "thumb" },
+        { "type": "badge" }, { "type": "badge" }, { "type": "badge" }
+      ]
+    }
+  ]
+}
+{% endschema %}
