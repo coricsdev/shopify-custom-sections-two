@@ -1,6 +1,6 @@
 # Overview
 
-These custom liquid section is 100% compatible to work with Horizon Theme
+These custom liquid sections are 100% compatible to work with Horizon Theme
 
 # Installation
 
